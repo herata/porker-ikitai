@@ -9,14 +9,21 @@
 		"lint": "next lint",
 		"deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
 		"preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
-		"cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts"
+		"cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts",
+		"fix": "npx @biomejs/biome check --write src"
 	},
 	"dependencies": {
+		"class-variance-authority": "^0.7.1",
+		"clsx": "^2.1.1",
+		"lucide-react": "^0.487.0",
 		"next": "15.2.5",
 		"react": "^19.0.0",
-		"react-dom": "^19.0.0"
+		"react-dom": "^19.0.0",
+		"tailwind-merge": "^3.2.0",
+		"tw-animate-css": "^1.2.5"
 	},
 	"devDependencies": {
+		"@biomejs/biome": "1.9.4",
 		"@cloudflare/workers-types": "^4.20250412.0",
 		"@opennextjs/cloudflare": "~1.0.0-beta.0 || ^1.0.0",
 		"@tailwindcss/postcss": "^4",
