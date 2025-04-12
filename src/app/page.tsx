@@ -1,103 +1,137 @@
+import { StoreCard } from "@/components/store/StoreCard";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { searchStores } from "@/lib/data/storeService";
+import { MapPin, Search } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
-export default function Home() {
+export default function HomePage() {
+	// Get a few featured stores
+	const featuredStores = searchStores().slice(0, 3);
+
 	return (
-		<div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-			<main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-				<Image
-					className="dark:invert"
-					src="/next.svg"
-					alt="Next.js logo"
-					width={180}
-					height={38}
-					priority
+		<div className="flex flex-col">
+			{/* Hero section */}
+			<div className="relative bg-primary text-white">
+				<div
+					className="absolute inset-0 bg-gradient-to-r from-primary to-primary-foreground opacity-90"
+					style={{
+						backgroundImage:
+							"url('https://images.unsplash.com/photo-1606167668584-78701c57f13d')",
+						backgroundSize: "cover",
+						backgroundPosition: "center",
+						mixBlendMode: "multiply",
+					}}
 				/>
-				<ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-					<li className="mb-2 tracking-[-.01em]">
-						Get started by editing{" "}
-						<code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-							src/app/page.tsx
-						</code>
-						.
-					</li>
-					<li className="tracking-[-.01em]">
-						Save and see your changes instantly.
-					</li>
-				</ol>
 
-				<div className="flex gap-4 items-center flex-col sm:flex-row">
-					<a
-						className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-						href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						<Image
-							className="dark:invert"
-							src="/vercel.svg"
-							alt="Vercel logomark"
-							width={20}
-							height={20}
-						/>
-						Deploy now
-					</a>
-					<a
-						className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-						href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						Read our docs
-					</a>
+				<div className="container mx-auto px-4 py-16 md:py-24 relative z-10">
+					<div className="max-w-3xl mx-auto text-center">
+						<h1 className="text-4xl md:text-5xl font-bold mb-4">
+							アミューズメントポーカーを見つけよう
+						</h1>
+						<p className="text-lg md:text-xl mb-8 opacity-90">
+							全国のアミューズメントポーカー店の情報を簡単に検索・閲覧できるサービス
+						</p>
+
+						<div className="bg-white rounded-lg p-1 flex flex-col md:flex-row shadow-lg">
+							<div className="relative flex-1 mb-2 md:mb-0">
+								<Input
+									className="pl-10 w-full border-0 focus-visible:ring-0 py-6 rounded-l-lg"
+									placeholder="地域・店舗名で検索..."
+								/>
+								<Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+							</div>
+							<Link href="/stores" className="w-full md:w-auto">
+								<Button size="lg" className="w-full md:rounded-l-none">
+									検索
+								</Button>
+							</Link>
+						</div>
+					</div>
 				</div>
-			</main>
-			<footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-				<a
-					className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-					href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					<Image
-						aria-hidden
-						src="/file.svg"
-						alt="File icon"
-						width={16}
-						height={16}
-					/>
-					Learn
-				</a>
-				<a
-					className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-					href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					<Image
-						aria-hidden
-						src="/window.svg"
-						alt="Window icon"
-						width={16}
-						height={16}
-					/>
-					Examples
-				</a>
-				<a
-					className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-					href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					<Image
-						aria-hidden
-						src="/globe.svg"
-						alt="Globe icon"
-						width={16}
-						height={16}
-					/>
-					Go to nextjs.org →
-				</a>
-			</footer>
+			</div>
+
+			{/* Features section */}
+			<div className="container mx-auto px-4 py-12 md:py-16">
+				<h2 className="text-2xl md:text-3xl font-bold text-center mb-10">
+					Poker Ikitaiの特徴
+				</h2>
+
+				<div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+					<Card className="p-6">
+						<div className="flex flex-col items-center text-center">
+							<div className="h-12 w-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
+								<Search className="h-6 w-6 text-primary" />
+							</div>
+							<h3 className="font-semibold text-lg mb-2">簡単検索</h3>
+							<p className="text-gray-600 text-sm">
+								地域や営業時間、料金システムなど様々な条件で店舗を検索できます
+							</p>
+						</div>
+					</Card>
+
+					<Card className="p-6">
+						<div className="flex flex-col items-center text-center">
+							<div className="h-12 w-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
+								<MapPin className="h-6 w-6 text-primary" />
+							</div>
+							<h3 className="font-semibold text-lg mb-2">マップ表示</h3>
+							<p className="text-gray-600 text-sm">
+								店舗の位置を地図上で確認できるので、最寄りのポーカールームが一目でわかります
+							</p>
+						</div>
+					</Card>
+
+					<Card className="p-6">
+						<div className="flex flex-col items-center text-center">
+							<div className="h-12 w-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="24"
+									height="24"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									strokeWidth="2"
+									strokeLinecap="round"
+									strokeLinejoin="round"
+									className="text-primary"
+								>
+									<title>Heart Icon</title>
+									<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+								</svg>
+							</div>
+							<h3 className="font-semibold text-lg mb-2">詳細情報</h3>
+							<p className="text-gray-600 text-sm">
+								料金システムやルール、イベント情報など、ポーカー店舗の詳細がすべて分かります
+							</p>
+						</div>
+					</Card>
+				</div>
+			</div>
+
+			{/* Featured stores section */}
+			<div className="bg-gray-50 py-12 md:py-16">
+				<div className="container mx-auto px-4">
+					<div className="flex justify-between items-center mb-8">
+						<h2 className="text-2xl font-bold">おすすめ店舗</h2>
+						<Link
+							href="/stores"
+							className="text-primary font-medium text-sm hover:underline"
+						>
+							すべての店舗を見る
+						</Link>
+					</div>
+
+					<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+						{featuredStores.map((store) => (
+							<StoreCard key={store.id} store={store} />
+						))}
+					</div>
+				</div>
+			</div>
 		</div>
 	);
 }
