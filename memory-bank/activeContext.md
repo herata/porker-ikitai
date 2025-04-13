@@ -14,6 +14,7 @@
 - Fixed React Hook dependency warnings in store listing page
 - Updated store detail page to use async pattern with dynamic routes
 - Fixed TypeScript interface for dynamic route page props to match Next.js 15 requirements
+- Resolved build error for Cloudflare Pages deployment by using inline typing for dynamic routes
 
 ## Next Steps
 1. Implement Google Maps integration for store locations
@@ -28,10 +29,14 @@
 - Using useCallback for stable function references in React components
 - Implementing proper async/await patterns with Next.js App Router
 - Using Next.js Image component with proper remote pattern configuration
-- Using the standard Next.js 15 PageProps interface for dynamic route pages:
+- Using inline TypeScript typing for dynamic route parameters to avoid conflicts with Next.js/OpenNext:
   ```typescript
-  interface PageProps {
-    params: { [key: string]: string };
-    searchParams: { [key: string]: string | string[] | undefined };
+  // Preferred approach for Next.js 15 with OpenNext for Cloudflare
+  export default async function DynamicPage({
+    params,
+  }: {
+    params: { id: string };
+  }) {
+    // Implementation
   }
   ```

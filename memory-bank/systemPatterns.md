@@ -21,19 +21,20 @@ graph TD
 - `app/stores/[id]/page.tsx`: Individual store details page (async)
 
 ### Next.js 15 Page Props Pattern
-For dynamic route pages, the correct TypeScript interface is:
-```typescript
-// Standard interface for Next.js 15 page components
-interface PageProps {
-  params: { [key: string]: string }; // Route parameters (like id in [id])
-  searchParams: { [key: string]: string | string[] | undefined }; // URL query parameters
-}
+For dynamic route pages with Next.js 15 and OpenNext for Cloudflare Pages, we found that inline typing works best:
 
-// Example usage
-export default async function DynamicPage({ params, searchParams }: PageProps) {
+```typescript
+// Most compatible approach for Next.js 15 with OpenNext/Cloudflare
+export default async function DynamicPage({
+  params,
+}: {
+  params: { id: string };
+}) {
   // Implementation
 }
 ```
+
+This approach avoids conflicts with auto-generated types and prevents TypeScript errors during build that block deployment.
 
 ### Components
 - `components/ui/`: Shadcn UI components

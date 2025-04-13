@@ -18,6 +18,10 @@
 - **Hosting**: Cloudflare Pages
 - **Build Tool**: OpenNext for Cloudflare Pages compatibility
 - **Image Configuration**: Remote patterns for Unsplash image hosting
+- **Deployment Considerations**:
+  - TypeScript types for dynamic routes require special handling
+  - Inline typing approach works best for OpenNext compatibility
+  - Auto-generated Next.js types can cause conflicts during build
 
 ## Data Structure
 ```typescript
@@ -60,6 +64,30 @@ export interface SearchParams {
 - **Dependency arrays** properly maintained in useEffect hooks
 - **Async/await** pattern in Next.js dynamic route components
 - **Client-side components** marked with "use client" directive where needed
+
+## Next.js 15 TypeScript Patterns
+- **Dynamic Routes**: Use inline typing for params to avoid conflicts with OpenNext:
+  ```typescript
+  export default async function StorePage({
+    params,
+  }: {
+    params: { id: string };
+  }) {
+    // Component implementation
+  }
+  ```
+- **Remote Patterns**: Configure in next.config.ts for external image sources:
+  ```typescript
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        pathname: '/**',
+      },
+    ],
+  }
+  ```
 
 ## Development Workflow
 1. Local development with `npm run dev`
