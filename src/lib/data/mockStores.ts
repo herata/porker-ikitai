@@ -125,7 +125,7 @@ export const mockStores: PokerStore[] = [
 		},
 		googleMapsPlaceId: "ChIJTf_mQUxwA2ARk-48Pj5zbRQ",
 		rating: 3.9,
-		photoUrl: "https://images.unsplash.com/photo-1629253295404-a01bef01f05b",
+		photoUrl: "https://images.unsplash.com/photo-1638057628438-4b42313f19e3",
 	},
 	{
 		id: "5",
@@ -156,6 +156,6 @@ export const mockStores: PokerStore[] = [
 		},
 		googleMapsPlaceId: "ChIJk3FpYmWRQTURPwDCJ-mKTAE",
 		rating: 4.2,
-		photoUrl: "https://images.unsplash.com/photo-1634979149798-e7616260959c",
+		photoUrl: "https://images.unsplash.com/photo-1655542290853-6adb4d01eacf",
 	},
 ];

@@ -5,15 +5,15 @@ import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-interface StorePageProps {
-	params: {
-		id: string;
-	};
-}
-
-export default async function StorePage({ params }: StorePageProps) {
+// Remove custom interface and use built-in Next.js types
+export default async function StorePage({
+	params,
+}: {
+	params: Promise<{ id: string }>;
+}) {
 	// Using async function to properly handle dynamic route parameters
-	const store = await getStoreById(params.id);
+	const { id } = await params;
+	const store = await getStoreById(id);
 
 	// If store not found, show 404
 	if (!store) {

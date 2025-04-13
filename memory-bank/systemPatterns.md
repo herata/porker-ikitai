@@ -20,6 +20,21 @@ graph TD
 - `app/stores/page.tsx`: Store listing page with search results
 - `app/stores/[id]/page.tsx`: Individual store details page (async)
 
+### Next.js 15 Page Props Pattern
+For dynamic route pages, the correct TypeScript interface is:
+```typescript
+// Standard interface for Next.js 15 page components
+interface PageProps {
+  params: { [key: string]: string }; // Route parameters (like id in [id])
+  searchParams: { [key: string]: string | string[] | undefined }; // URL query parameters
+}
+
+// Example usage
+export default async function DynamicPage({ params, searchParams }: PageProps) {
+  // Implementation
+}
+```
+
 ### Components
 - `components/ui/`: Shadcn UI components
 - `components/layout/`: Layout components (Header, Footer, etc.)
