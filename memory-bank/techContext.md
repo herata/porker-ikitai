@@ -18,10 +18,16 @@
 - **Hosting**: Cloudflare Pages
 - **Build Tool**: OpenNext for Cloudflare Pages compatibility
 - **Image Configuration**: Remote patterns for Unsplash image hosting
+- **Runtime Configuration**: 
+  - Runtime configuration has been simplified in the project
+  - Using `export const runtime = 'edge'` at the global level in next.config.ts
+  - Empty OpenNext configuration file to avoid compatibility issues
+  - Dynamic routes use Promise-based params typing for maximum compatibility
 - **Deployment Considerations**:
-  - TypeScript types for dynamic routes require special handling
-  - Inline typing approach works best for OpenNext compatibility
+  - TypeScript types for dynamic routes in Next.js 15 require special handling
+  - Using Promise-based params typing: `params: Promise<{ id: string }>`
   - Auto-generated Next.js types can cause conflicts during build
+  - Runtime configurations must be properly aligned between Next.js and OpenNext
 
 ## Data Structure
 ```typescript
@@ -66,17 +72,18 @@ export interface SearchParams {
 - **Client-side components** marked with "use client" directive where needed
 
 ## Next.js 15 TypeScript Patterns
-- **Dynamic Routes**: Use inline typing for params to avoid conflicts with OpenNext:
+- **Dynamic Routes**: Using Promise-based params typing for maximum compatibility:
   ```typescript
   export default async function StorePage({
     params,
   }: {
-    params: { id: string };
+    params: Promise<{ id: string }>;
   }) {
+    const { id } = await params;
     // Component implementation
   }
   ```
-- **Remote Patterns**: Configure in next.config.ts for external image sources:
+- **Remote Patterns**: Configured in next.config.ts for external image sources:
   ```typescript
   images: {
     remotePatterns: [
@@ -86,7 +93,15 @@ export interface SearchParams {
         pathname: '/**',
       },
     ],
-  }
+  },
+  ```
+- **Global Runtime Configuration**: Set at the Next.js config level:
+  ```typescript
+  // next.config.ts
+  const nextConfig: NextConfig = {
+    runtime: "edge",
+    // Other configurations...
+  };
   ```
 
 ## Development Workflow

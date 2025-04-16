@@ -17,24 +17,51 @@ graph TD
 
 ### Pages
 - `app/page.tsx`: Home page with search and featured stores
-- `app/stores/page.tsx`: Store listing page with search results
-- `app/stores/[id]/page.tsx`: Individual store details page (async)
+- `app/stores/page.tsx`: Store listing page with search results (client-side)
+- `app/stores/[id]/page.tsx`: Individual store details page (async, Promise-based params)
 
 ### Next.js 15 Page Props Pattern
-For dynamic route pages with Next.js 15 and OpenNext for Cloudflare Pages, we found that inline typing works best:
+For dynamic route pages with Next.js 15 and OpenNext for Cloudflare Pages, we've found that Promise-based params typing works best:
 
 ```typescript
 // Most compatible approach for Next.js 15 with OpenNext/Cloudflare
-export default async function DynamicPage({
+export default async function StorePage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
+  const { id } = await params;
   // Implementation
 }
 ```
 
 This approach avoids conflicts with auto-generated types and prevents TypeScript errors during build that block deployment.
+
+### Runtime Configuration with Next.js and OpenNext
+
+We've simplified the approach to runtime configuration by setting it globally in next.config.ts:
+
+```typescript
+// In next.config.ts - global runtime configuration
+const nextConfig: NextConfig = {
+  runtime: "edge",
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        pathname: '/**',
+      },
+    ],
+  },
+};
+```
+
+Key learnings for Next.js with OpenNext and Cloudflare Pages:
+- Avoid complex page-level runtime configurations
+- Keep OpenNext configuration minimal to prevent conflicts
+- Use Promise-based params typing for dynamic routes
+- Configure global runtime settings at the Next.js config level
 
 ### Components
 - `components/ui/`: Shadcn UI components
@@ -72,12 +99,17 @@ interface StoreFiltersProps {
 }
 ```
 
-## API Structure (Future)
+## Next.js App Router Implementation
+- Client components marked with "use client" directive
+- Server components use async/await pattern
+- Dynamic routes handle params asynchronously
+- Global layout provides consistent UI structure
 
-### Endpoints
-- `/api/stores`: List all stores with optional filters
-- `/api/stores/[id]`: Get details for a specific store
-- `/api/search`: Search stores with complex filtering
+## API Structure (Current Mock Implementation)
+
+### API Services
+- `getStoreById(id: string): Promise<PokerStore | null>`
+- `searchStores(params?: SearchParams): PokerStore[]`
 
 ## Styling Approach
 - Mobile-first design using Tailwind CSS
